@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import com.example.levelx.R
+import com.example.levelx.api.ApiClient
 import com.example.levelx.ui.activities.SettingsActivity
 
 class DashboardFragment : BaseFragment() {
@@ -35,6 +36,7 @@ class DashboardFragment : BaseFragment() {
     private fun getDashboardItemsList() {
         // Show the progress dialog.
         showProgressDialog(resources.getString(R.string.please_wait))
+        ApiClient.apiService.getProducts();
         hideProgressDialog()
 
     }
