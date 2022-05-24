@@ -28,11 +28,10 @@
             android:layout_gravity="center"
             android:contentDescription="@string/app_name"
             android:scaleType="fitCenter"
-            android:src="@drawable/logo_name"
-            app:tint="@color/white" />
+            android:src="@drawable/logo_name" />
     </FrameLayout>
 
-    <com.example.levelx.utils.MSPTextViewBold
+    <com.example.frd.utils.MSPTextViewBold
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title">
 
-        <com.example.levelx.utils.MSPEditText
+        <com.example.frd.utils.MSPEditText
             android:id="@+id/t_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,7 +82,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_email">
 
-        <com.example.levelx.utils.MSPEditText
+        <com.example.frd.utils.MSPEditText
             android:id="@+id/t_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,7 +93,7 @@
             tools:text="123456" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.example.levelx.utils.MSPTextView
+    <com.example.frd.utils.MSPTextView
         android:id="@+id/tv_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -108,7 +107,7 @@
         app:layout_constraintTop_toBottomOf="@id/til_password"
         android:layout_marginRight="16dp" />
 
-    <com.example.levelx.utils.MSPButtons
+    <com.example.frd.utils.MSPButtons
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -138,7 +137,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login">
 
-        <com.example.levelx.utils.MSPTextView
+        <com.example.frd.utils.MSPTextView
             android:id="@+id/tv_don_t_have_an_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -147,7 +146,7 @@
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/lbl_text_view_textSize" />
 
-        <com.example.levelx.utils.MSPTextViewBold
+        <com.example.frd.utils.MSPTextViewBold
             android:id="@+id/tv_register"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
