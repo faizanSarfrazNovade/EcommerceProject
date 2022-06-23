@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:580816816267:android:a7dc51022f6e75052cac8e",
         "android_client_info": {
-          "package_name": "com.example.levelx"
+          "package_name": "com.example.frd"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "580816816267-jgnsa5h6tcubjtmbodv57h1uq7robiqt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.levelx",
+            "package_name": "com.example.frd",
             "certificate_hash": "aa0d80a17889d35be0f5c7c911b6535c46c5b928"
           }
         },

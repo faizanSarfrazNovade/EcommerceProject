@@ -4,11 +4,18 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Patterns
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import com.example.frd.R
+import com.example.frd.api.ApiClient
+import com.example.frd.models.UserSignin
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.internal.http.HTTP_OK
 
 
 class LoginActivity : BaseActivity(), View.OnClickListener{
@@ -64,12 +71,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener{
      * A function to validate the login entries of a user.
      */
     private fun validateLoginDetails(): Boolean {
+        val email = t_email.text.toString().trim()
+        val password = t_password.text.toString().trim()
         return when {
-            TextUtils.isEmpty(t_email.text.toString().trim { it <= ' ' }) -> {
+            isValidEmail(email) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
                 false
-            }
-            TextUtils.isEmpty(t_password.text.toString().trim { it <= ' ' }) -> {
+            };
+            TextUtils.isEmpty(password) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_password), true)
                 false
             }
@@ -79,17 +88,28 @@ class LoginActivity : BaseActivity(), View.OnClickListener{
             }
         }
     }
-    private fun logInRegisteredUser(){
-        if(validateLoginDetails()){
-            showProgressDialog(resources.getString(R.string.please_wait))
-            hideProgressDialog()
-
-            val email = t_email.text.toString().trim(){it<=' '}
-            val password = t_password.text.toString().trim(){it<=' '}
-
-            val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
-            startActivity(intent)
+    fun isValidEmail(target: CharSequence?): Boolean {
+        return if (TextUtils.isEmpty(target)) {
+            false
+        } else {
+            !Patterns.EMAIL_ADDRESS.matcher(target).matches()
         }
     }
+    private fun logInRegisteredUser(){
+        if(validateLoginDetails()){
+            val email = t_email.text.toString().trim(){it<=' '}
+            val password = t_password.text.toString().trim(){it<=' '}
+            val signIn = UserSignin(email, password)
+            val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+            CoroutineScope(Dispatchers.IO).launch {
+                val res = ApiClient.apiService.signIn(signIn)
 
+                if (res.code() == HTTP_OK){
+                    startActivity(intent)
+                }else {
+                    showErrorSnackBar(resources.getString(R.string.err_msg_email_password_mismatch), true)
+                }
+            }
+        }
+    }
 }

@@ -3,14 +3,18 @@ package com.example.frd.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Patterns
 import android.view.WindowManager
+import android.widget.Toast
 import com.example.frd.R
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.example.frd.api.ApiClient
+import com.example.frd.models.UserSignup
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.internal.http.HTTP_OK
 
 
 class RegisterActivity : BaseActivity() {
@@ -52,6 +56,7 @@ class RegisterActivity : BaseActivity() {
      */
     private fun validateRegisterDetails(): Boolean {
         return when {
+
             TextUtils.isEmpty(et_first_name.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_first_name), true)
                 false
@@ -62,7 +67,7 @@ class RegisterActivity : BaseActivity() {
                 false
             }
 
-            TextUtils.isEmpty(et_email.text.toString().trim { it <= ' ' }) -> {
+            isValidEmail(et_email.text.toString().trim()) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
                 false
             }
@@ -91,39 +96,35 @@ class RegisterActivity : BaseActivity() {
             }
         }
     }
-
+    fun isValidEmail(target: CharSequence?): Boolean {
+        return if (TextUtils.isEmpty(target)) {
+            false
+        } else {
+            !Patterns.EMAIL_ADDRESS.matcher(target).matches()
+        }
+    }
     private fun registerUser() {
 
         // Check with validate function if the entries are valid or not.
         if (validateRegisterDetails()) {
 
-            showProgressDialog(resources.getString(R.string.please_wait))
-            hideProgressDialog()
             val email: String = et_email.text.toString().trim { it <= ' ' }
-            val password: String = et_email.text.toString().trim { it <= ' ' }
+            val password: String = et_password.text.toString().trim { it <= ' ' }
+            val name: String = et_first_name.text.toString().trim { it <= ' ' }
+            val lastName: String = et_last_name.text.toString().trim { it <= ' ' }
+            val age: Int = 0
+            val civility= null
+            val admin= null
+            val signUp = UserSignup(email, password)
+            CoroutineScope(Dispatchers.IO).launch {
+                val res = ApiClient.apiService.signUp(signUp)
 
-            // Create an instance and create a register a user with email and password.
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(
-                    OnCompleteListener<AuthResult> { task ->
-
-                       // hideProgressDialog()
-                        // If the registration is successfully done
-                        if (task.isSuccessful) {
-
-                            // Firebase registered user
-                            val firebaseUser: FirebaseUser = task.result!!.user!!
-                            showErrorSnackBar(
-                                "You are registered successfully. Your user id is ${firebaseUser.uid}",
-                                false
-                            )
-
-                        } else {
-                            // If the registering is not successful then show error message.
-                            hideProgressDialog()
-                            showErrorSnackBar(task.exception!!.message.toString(), true)
-                        }
-                    })
+                if (res.code() == HTTP_OK){
+                    Toast.makeText(applicationContext, "Un compte a été crée", Toast.LENGTH_LONG ).show()
+                }else {
+                    Toast.makeText(applicationContext, "tu joues a quoi", Toast.LENGTH_LONG ).show()
+                }
+            }
         }
     }
 
