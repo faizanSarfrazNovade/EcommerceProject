@@ -1,16 +1,18 @@
 package com.example.frd.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
-data class Product (
-        val user_id: String = "",
-        val user_name: String = "",
-        val title: String = "",
-        val price: String = "",
-        val description: String = "",
-        val stock_quantity: String = "",
-        val image: String = "",
-        var product_id: String = "",
-) : Parcelable
+data class Product(
+        val id: String,
+        val name: String,
+        val description: String,
+        val image1: String,
+        val image2:  String,
+        val image3:  String,
+        val image4: String,
+        val color: String,
+        val price: Int,
+        val rate: Int,
+        val nbVote: Int,
+        val stock: Int,
+        val dateAdded: String,
+        val quantityOnCart: Int
+)

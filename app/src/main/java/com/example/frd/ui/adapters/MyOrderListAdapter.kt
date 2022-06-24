@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.frd.R
 import com.example.frd.models.Order
 import com.example.frd.ui.activities.MyOrderDetailsActivity
-import com.example.frd.utils.Constants
 import com.example.frd.utils.GlideLoader
 import kotlinx.android.synthetic.main.item_list_layout.view.*
 
@@ -62,7 +61,6 @@ open class MyOrdersListAdapter(
 
             holder.itemView.setOnClickListener {
                 val intent = Intent(context, MyOrderDetailsActivity::class.java)
-                intent.putExtra(Constants.EXTRA_MY_ORDER_DETAILS, model)
                 context.startActivity(intent)
             }
         }

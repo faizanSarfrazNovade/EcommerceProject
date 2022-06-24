@@ -12,7 +12,7 @@ interface ApiService {
     @GET("/products")
     suspend fun getProducts(): Response<MutableList<Product>?>
 
-    @GET("/products/id/{id}")
+    @GET("/products/{id}")
     suspend fun getProductById(@Path("id") id: String): Response<Product?>
 
     //users

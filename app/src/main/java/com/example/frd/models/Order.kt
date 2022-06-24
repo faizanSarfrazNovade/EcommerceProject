@@ -1,9 +1,5 @@
 package com.example.frd.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
 data class Order(
     val user_id: String = "",
     val items: ArrayList<Cart> = ArrayList(),
@@ -15,4 +11,4 @@ data class Order(
     val total_amount: String = "",
     val order_datetime: Long = 0L,
     var id: String = ""
-) : Parcelable
+)

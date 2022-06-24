@@ -9,13 +9,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DashboardViewModel : ViewModel() {
-     fun getProducts(): LiveData<MutableList<Product>> {
-        val products = MutableLiveData<MutableList<Product>>()
+class ProductViewModel: ViewModel() {
+    fun getProduct(id: String): LiveData<Product> {
+        val product = MutableLiveData<Product>()
         CoroutineScope(Dispatchers.IO).launch {
-            val response = ApiClient.apiService.getProducts()
-            products.postValue(response.body()!!)
+            val response = ApiClient.apiService.getProductById(id)
+            product.postValue(response.body()!!)
         }
-        return products
-    }
+        return product
+}
 }

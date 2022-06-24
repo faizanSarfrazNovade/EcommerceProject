@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.frd.R
 import com.example.frd.models.Address
 import com.example.frd.ui.activities.CheckoutActivity
-import com.example.frd.utils.Constants
 import kotlinx.android.synthetic.main.item_address_layout.view.*
 
 /**
@@ -62,7 +61,6 @@ open class AddressListAdapter(
             if (selectAddress) {
                 holder.itemView.setOnClickListener {
                     val intent = Intent(context, CheckoutActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_SELECTED_ADDRESS, model)
                     context.startActivity(intent)
                 }
             }

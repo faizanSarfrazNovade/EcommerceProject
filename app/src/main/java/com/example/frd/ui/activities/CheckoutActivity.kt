@@ -5,7 +5,6 @@ import com.example.frd.R
 import com.example.frd.models.Address
 import com.example.frd.models.Cart
 import com.example.frd.models.Product
-import com.example.frd.utils.Constants
 import kotlinx.android.synthetic.main.activity_checkout.*
 
 class CheckoutActivity : BaseActivity() {
@@ -20,11 +19,7 @@ class CheckoutActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout)
         setupActionBar()
-
-        if(intent.hasExtra(Constants.EXTRA_SELECTED_ADDRESS)){
-            mAddressDetails = intent.getParcelableExtra<Address>(Constants.EXTRA_SELECTED_ADDRESS)
-        }
-
+        
         if (mAddressDetails != null) {
             tv_checkout_address_type.text = mAddressDetails?.type
             tv_checkout_full_name.text = mAddressDetails?.name

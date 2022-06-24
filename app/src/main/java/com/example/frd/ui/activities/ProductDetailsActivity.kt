@@ -3,9 +3,12 @@ package com.example.frd.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.frd.R
 import com.example.frd.models.Product
 import com.example.frd.ui.ui.fragments.CartListFragment
+import com.example.frd.ui.viewmodels.ProductViewModel
 import com.example.frd.utils.Constants
 import kotlinx.android.synthetic.main.activity_product_details.*
 
@@ -14,6 +17,7 @@ class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
     // A global variable for product id.
     private var mProductId: String = ""
     private lateinit var mProductDetails: Product
+    private lateinit var productViewModel: ProductViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +33,6 @@ class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
         btn_add_to_cart.visibility = View.VISIBLE
         btn_add_to_cart.setOnClickListener(this)
         btn_go_to_cart.setOnClickListener(this)
-
         getProductDetails()
     }
 
@@ -46,13 +49,53 @@ class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
         toolbar_product_details_activity.setNavigationOnClickListener { onBackPressed() }
     }
 
-    private fun getProductDetails() {
+    fun getProductDetails() {
+        productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
 
-        // Show the product dialog
-        showProgressDialog(resources.getString(R.string.please_wait))
-        hideProgressDialog()
+        productViewModel.getProduct(mProductId).observe(this, { product ->
+            productDetailsSuccess(product)
+        })
+
     }
 
+
+    fun productDetailsSuccess(product: Product) {
+
+        mProductDetails = product
+        // Hide Progress dialog.
+        //hideProgressDialog()
+
+        // Populate the product details in the UI.
+        /*GlideLoader(this@ProductDetailsActivity).loadProductPicture(
+            product.image,
+            iv_product_detail_image
+        )*/
+
+        tv_product_details_title.text = product.name
+        tv_product_details_price.text = "$${product.price}"
+        tv_product_details_description.text = product.description
+        tv_product_details_stock_quantity.text = product.stock.toString()
+
+        // There is no need to check the cart list if the product owner himself is seeing the product details.
+        if(product.stock == 0){
+
+            // Hide Progress dialog.
+            hideProgressDialog()
+
+            // Hide the AddToCart button if the item is already in the cart.
+            btn_add_to_cart.visibility = View.GONE
+
+            tv_product_details_stock_quantity.text =
+                resources.getString(R.string.lbl_out_of_stock)
+
+            tv_product_details_stock_quantity.setTextColor(
+                ContextCompat.getColor(
+                    this@ProductDetailsActivity,
+                    R.color.colorSnackBarError
+                )
+            )
+        }
+    }
 
     /**
      * A function to prepare the cart item to add it to the cart.

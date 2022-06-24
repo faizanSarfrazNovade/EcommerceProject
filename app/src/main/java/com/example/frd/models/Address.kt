@@ -1,9 +1,5 @@
 package com.example.frd.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
 data class Address(
     val user_id: String = "",
     val name: String = "",
@@ -16,4 +12,4 @@ data class Address(
     val type: String = "",
     val otherDetails: String = "",
     var id: String = "",
-) : Parcelable
+)

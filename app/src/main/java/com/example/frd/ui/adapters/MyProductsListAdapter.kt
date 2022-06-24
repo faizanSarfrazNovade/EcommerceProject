@@ -34,19 +34,18 @@ open class MyProductsListAdapter(
 
         if (holder is MyViewHolder) {
 
-            GlideLoader(context).loadProductPicture(model.image, holder.itemView.iv_item_image)
+            GlideLoader(context).loadProductPicture(model.image1, holder.itemView.iv_item_image)
 
-            holder.itemView.tv_item_name.text = model.title
+            holder.itemView.tv_item_name.text = model.name
             holder.itemView.tv_item_price.text = "$${model.price}"
 
             holder.itemView.ib_delete_product.setOnClickListener {
-                fragment.deleteProduct(model.product_id)
+                fragment.deleteProduct(model.id)
             }
             holder.itemView.setOnClickListener {
                 // Launch Product details screen.
                 val intent = Intent(context, ProductDetailsActivity::class.java)
-                intent.putExtra(Constants.EXTRA_PRODUCT_ID, model.product_id)
-                intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, model.user_id)
+                intent.putExtra(Constants.EXTRA_PRODUCT_ID, model.id)
                 context.startActivity(intent)
             }
         }

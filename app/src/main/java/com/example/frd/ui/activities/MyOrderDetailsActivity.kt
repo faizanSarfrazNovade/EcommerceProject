@@ -1,15 +1,14 @@
 package com.example.frd.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.frd.R
 import com.example.frd.models.Order
 import com.example.frd.ui.adapters.CartItemsListAdapter
-import com.example.frd.utils.Constants
 import kotlinx.android.synthetic.main.activity_my_order_details.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,11 +21,6 @@ class MyOrderDetailsActivity : AppCompatActivity() {
         setupActionBar()
 
         var myOrderDetails: Order = Order()
-
-        if (intent.hasExtra(Constants.EXTRA_MY_ORDER_DETAILS)) {
-            myOrderDetails =
-                intent.getParcelableExtra<Order>(Constants.EXTRA_MY_ORDER_DETAILS)!!
-        }
 
         setupUI(myOrderDetails)
     }

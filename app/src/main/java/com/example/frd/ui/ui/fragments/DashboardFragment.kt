@@ -3,25 +3,21 @@ package com.example.frd.ui.ui.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.frd.R
-import com.example.frd.api.ApiClient
 import com.example.frd.models.Product
 import com.example.frd.ui.activities.ProductDetailsActivity
 import com.example.frd.ui.activities.SettingsActivity
+import com.example.frd.ui.adapters.DashboardItemsListAdapter
 import com.example.frd.ui.viewmodels.DashboardViewModel
 import com.example.frd.utils.Constants
-import com.myshoppal.ui.adapters.DashboardItemsListAdapter
 import kotlinx.android.synthetic.main.fragment_dashboard.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class DashboardFragment : BaseFragment() {
-
+    private lateinit var dashboardViewModel: DashboardViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // If we want to use the option menu in fragment we need to add it.
@@ -38,22 +34,21 @@ class DashboardFragment : BaseFragment() {
             ViewModelProviders.of(this).get(DashboardViewModel::class.java)*/
 
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
+        dashboardViewModel.getProducts().observe(viewLifecycleOwner, { products ->
+            val adapter = activity?.let { DashboardItemsListAdapter(it, products) }
+            val rvProducts = root.findViewById<RecyclerView>(R.id.rv_dashboard_items)
+            rvProducts.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            rvProducts?.adapter = adapter
+            successDashboardItemsList(products)
+        })
+
         return root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.dashboard_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    private fun getDashboardItemsList(): LiveData<MutableList<Product>> {
-        val products = MutableLiveData<MutableList<Product>>()
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = ApiClient.apiService.getProducts()
-            products.postValue(response.body()!!)
-        }
-
-        return products
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -72,21 +67,11 @@ class DashboardFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        val dashboardViewModel = DashboardViewModel by activityViewModels<dD>()
-        DashboardViewModel.getDashboardItemsList().observe(viewLifecycleOwner, { products ->
-            val adapter = activity?.let { ProductAdapter(it, products) }
-            val rvProducts = root.findViewById<RecyclerView>(R.id.listProducts)
-            rvProducts.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            rvProducts?.adapter = adapter
-        })
     }
 
-    fun successDashboardItemsList(dashboardItemsList: ArrayList<Product>) {
+    fun successDashboardItemsList(dashboardItemsList: MutableList<Product>) {
 
-        // Hide the progress dialog.
-        hideProgressDialog()
-
-        if (dashboardItemsList.size > 0) {
+        if (dashboardItemsList.size ?: 0 > 0) {
 
             rv_dashboard_items.visibility = View.VISIBLE
             tv_no_dashboard_items_found.visibility = View.GONE
@@ -103,7 +88,7 @@ class DashboardFragment : BaseFragment() {
 
                     // Launch the product details screen from the dashboard.
                     val intent = Intent(context, ProductDetailsActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.product_id)
+                    intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.id)
                     startActivity(intent)
                 }
             })
