@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frd.R
 import com.example.frd.models.Product
+import com.example.frd.utils.GlideLoader
 import kotlinx.android.synthetic.main.item_dashboard_layout.view.*
 
 /**
@@ -32,17 +33,19 @@ open class DashboardItemsListAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val model = list[position]
+        val product = list[position]
         if (holder is MyViewHolder) {
-           /* GlideLoader(context).loadProductPicture(
-                model.image1,
-                holder.itemView.iv_dashboard_item_image
-            )*/
-            holder.itemView.tv_dashboard_item_title.text = model.name
-            holder.itemView.tv_dashboard_item_price.text = "$${model.price}"
+            if (product.image1 != null) {
+                GlideLoader(context).loadProductPicture(
+                    product.image1,
+                    holder.itemView.iv_dashboard_item_image
+                )
+            }
+            holder.itemView.tv_dashboard_item_title.text = product.name
+            holder.itemView.tv_dashboard_item_price.text = "$${product.price}"
             holder.itemView.setOnClickListener {
                 if (onClickListener != null) {
-                    onClickListener!!.onClick(position, model)
+                    onClickListener!!.onClick(position, product)
                 }
             }
         }

@@ -10,6 +10,7 @@ import com.example.frd.models.Product
 import com.example.frd.ui.ui.fragments.CartListFragment
 import com.example.frd.ui.viewmodels.ProductViewModel
 import com.example.frd.utils.Constants
+import com.example.frd.utils.GlideLoader
 import kotlinx.android.synthetic.main.activity_product_details.*
 
 class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
@@ -66,21 +67,21 @@ class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
         //hideProgressDialog()
 
         // Populate the product details in the UI.
-        /*GlideLoader(this@ProductDetailsActivity).loadProductPicture(
-            product.image,
-            iv_product_detail_image
-        )*/
+        if (product.image1 != null){
+            GlideLoader(this@ProductDetailsActivity).loadProductPicture(
+                product.image1,
+                iv_product_detail_image
+            )
+        }
+
 
         tv_product_details_title.text = product.name
-        tv_product_details_price.text = "$${product.price}"
+        tv_product_details_price.text = if (product.price != null) "$${product.price}" else "0"
         tv_product_details_description.text = product.description
-        tv_product_details_stock_quantity.text = product.stock.toString()
+        tv_product_details_stock_quantity.text = if (product.stock != null) product.stock.toString() else "0"
 
         // There is no need to check the cart list if the product owner himself is seeing the product details.
         if(product.stock == 0){
-
-            // Hide Progress dialog.
-            hideProgressDialog()
 
             // Hide the AddToCart button if the item is already in the cart.
             btn_add_to_cart.visibility = View.GONE

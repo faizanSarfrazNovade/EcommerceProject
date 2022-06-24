@@ -9,10 +9,10 @@ data class Product(
         val image3:  String,
         val image4: String,
         val color: String,
-        val price: Int,
+        val price: Int?,
         val rate: Int,
         val nbVote: Int,
-        val stock: Int,
+        val stock: Int?,
         val dateAdded: String,
         val quantityOnCart: Int
 )
