@@ -66,15 +66,8 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         toolbar_settings_activity.setNavigationOnClickListener { onBackPressed() }
     }
 
-    /**
-     * A function to get the user details from firestore.
-     */
+
     private fun getUserDetails() {
-
-        // Show the progress dialog
-//        showProgressDialog(resources.getString(R.string.please_wait))
-
-        // Call the function of Firestore class to get the user details from firestore which is already created.
     }
 
 }

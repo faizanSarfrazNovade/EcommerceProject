@@ -2,7 +2,6 @@ package com.example.frd.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 @Parcelize
 data class Product(
@@ -18,6 +17,5 @@ data class Product(
         val rate: Double = 0.0,
         val nbVote: Int = 0,
         val stock: Int = 0,
-        val dateAdded: Date = Date(0),
         var quantityOnCart: Int = 0
 ) : Parcelable

@@ -60,10 +60,8 @@ class MyOrderDetailsActivity : AppCompatActivity() {
             CartItemsListAdapter(this@MyOrderDetailsActivity, orderDetails.cart.product)
         rv_my_order_items_list.adapter = cartListAdapter
 
-        tv_my_order_details_full_name.text = orderDetails.deliveryAddress.nameCustomer
         tv_my_order_details_address.text =
-            "${orderDetails.deliveryAddress.street}, ${orderDetails.deliveryAddress.postalCode}"
-        tv_my_order_details_mobile_number.text = orderDetails.deliveryAddress.number.toString()
+            "${orderDetails.deliveryAddress.street}, ${orderDetails.deliveryAddress.zipCode}"
         tv_order_details_total_amount.text = orderDetails.total.toString()
     }
 }

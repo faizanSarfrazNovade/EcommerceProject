@@ -182,13 +182,6 @@
                 android:paddingEnd="@dimen/my_order_details_content_paddingStartEnd"
                 android:paddingBottom="@dimen/my_order_details_content_paddingTopBottom">
 
-                <com.example.frd.utils.MSPTextViewBold
-                    android:id="@+id/tv_my_order_details_full_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/item_value_text_color"
-                    android:textSize="@dimen/item_address_name_textSize"
-                    tools:text="Denis Panjuta" />
 
                 <com.example.frd.utils.MSPTextView
                     android:id="@+id/tv_my_order_details_address"
@@ -199,14 +192,6 @@
                     android:textSize="@dimen/address_details_textSize"
                     tools:text="XYZ" />
 
-                <com.example.frd.utils.MSPTextView
-                    android:id="@+id/tv_my_order_details_mobile_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/address_details_marginTop"
-                    android:textColor="@color/item_value_text_color"
-                    android:textSize="@dimen/address_details_textSize"
-                    tools:text="+64 123456789" />
             </LinearLayout>
 
             <com.example.frd.utils.MSPTextView

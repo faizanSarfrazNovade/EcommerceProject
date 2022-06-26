@@ -18,6 +18,7 @@ class DashboardViewModel : ViewModel() {
         }
         return products
     }
+    // Function used to get an array of 1 products (the product getAll was disabled so i used this to test without using the broken route)
     fun getProductByID(id: String): LiveData<MutableList<Product>> {
         val product = MutableLiveData<MutableList<Product>>()
         val mutableList = mutableListOf<Product>()

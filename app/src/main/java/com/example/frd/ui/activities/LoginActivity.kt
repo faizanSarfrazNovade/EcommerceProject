@@ -49,19 +49,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener{
         if (v != null) {
             when (v.id) {
 
-                R.id.tv_forgot_password -> {
-                    // Launch the forgot password screen when the user clicks on the forgot password text.
-                    val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
-                    startActivity(intent)
-
-                }
+                R.id.tv_forgot_password -> {}
 
                 R.id.btn_login -> {
                     logInRegisteredUser()
                 }
 
                 R.id.tv_register -> {
-                    // Launch the register screen when the user clicks on the text.
                     val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                     startActivity(intent)
                 }
@@ -84,7 +78,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener{
                 false
             }
             else -> {
-                //showErrorSnackBar("Your Details are Valid",false)
                 true
             }
         }
@@ -110,6 +103,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener{
                     val preferences = getSharedPreferences("userToken", Context.MODE_PRIVATE)
                     val prefsEditor = preferences.edit()
                     prefsEditor.putString("userToken", userToken.accessToken)
+                    prefsEditor.putString("userId", userToken.id)
                     prefsEditor.commit()
                     startActivity(intent)
                 }else {

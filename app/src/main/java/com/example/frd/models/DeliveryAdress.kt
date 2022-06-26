@@ -5,10 +5,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class DeliveryAddress(
-    var id: String = "",
-    val nameCustomer: String = "",
     val country: String = "France",
     val street: String = "",
-    val postalCode : Int = 0,
-    val number : Int = 0
+    val zipCode : Int = 0,
+    val city : String = "Paris",
+    val userId : String = ""
 ) : Parcelable

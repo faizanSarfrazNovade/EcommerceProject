@@ -3,12 +3,14 @@ package com.example.frd.ui.ui.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.frd.R
 import com.example.frd.api.ApiClient
-import com.example.frd.models.Cart
+import com.example.frd.models.Cart2
 import com.example.frd.models.Product
 import com.example.frd.ui.activities.AddressListActivity
 import com.example.frd.ui.activities.BaseActivity
@@ -43,14 +45,17 @@ class CartListActivity : BaseActivity() {
             products[0].quantityOnCart = cartListViewModel.currentNumber.value!!
             val p = products[0]
             val mPrefs = getSharedPreferences("userToken", Context.MODE_PRIVATE)
-            var userSession = mPrefs.getString("userToken", "").toString()
-            val cart = Cart("", products, userSession, false, p.id, "", p.quantityOnCart, p.price.toLong())
-            CoroutineScope(Dispatchers.IO).launch {
-                Log.d("faizan", cart.toString())
-                val res = ApiClient.apiService.submitCart(cart)
+            var userToken = mPrefs.getString("userToken", "").toString()
 
+            val cart = Cart2( userToken, false, p.id, "cb", p.quantityOnCart, p.price.toLong(), products)
+            CoroutineScope(Dispatchers.IO).launch {
+                val res = ApiClient.apiService.submitCart(cart)
                 if (res.code() == HTTP_OK){
+                    Looper.prepare()
+                    Toast.makeText(applicationContext, "An Order has been placed", Toast.LENGTH_LONG).show()
+                    Handler().postDelayed({
                     startActivity(intent)
+                    }, 2000)
                 }else {
                     showErrorSnackBar(resources.getString(R.string.err_msg_email_password_mismatch), true)
                 }

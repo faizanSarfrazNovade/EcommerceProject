@@ -51,14 +51,14 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/hint_full_name"
+                android:hint="@string/hint_country"
                 android:textColorHint="@color/colorSecondaryText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.example.frd.utils.MSPEditText
-                    android:id="@+id/et_full_name"
+                    android:id="@+id/et_country"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -82,7 +82,7 @@
                 app:layout_constraintTop_toBottomOf="@id/til_full_name">
 
                 <com.example.frd.utils.MSPEditText
-                    android:id="@+id/et_phone_number"
+                    android:id="@+id/et_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
@@ -106,7 +106,7 @@
                 app:layout_constraintTop_toBottomOf="@id/til_phone_number">
 
                 <com.example.frd.utils.MSPEditText
-                    android:id="@+id/et_address"
+                    android:id="@+id/et_street"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"

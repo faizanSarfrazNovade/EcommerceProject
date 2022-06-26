@@ -114,10 +114,6 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
                 R.id.btn_save ->{
                     if (validateUserProfileDetails()) {
-
-                        // Show the progress dialog.
-                        showProgressDialog(resources.getString(R.string.please_wait))
-                        hideProgressDialog()
                     }
                 }
             }

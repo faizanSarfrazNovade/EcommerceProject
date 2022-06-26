@@ -29,12 +29,7 @@ class OrdersFragment : BaseFragment() {
         getMyOrdersList()
     }
 
-    /**
-     * A function to get the list of my orders.
-     */
+
     private fun getMyOrdersList() {
-        // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
-        hideProgressDialog()
     }
 }

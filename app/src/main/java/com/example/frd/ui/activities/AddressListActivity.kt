@@ -1,28 +1,35 @@
 package com.example.frd.ui.activities
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.frd.R
+import com.example.frd.models.DeliveryAddress
+import com.example.frd.ui.adapters.AddressListAdapter
+import com.example.frd.ui.viewmodels.AddAddressViewModel
 import com.example.frd.utils.Constants
+import com.myshoppal.utils.SwipeToEditCallback
 import kotlinx.android.synthetic.main.activity_add_edit_address.*
 import kotlinx.android.synthetic.main.activity_address_list.*
+import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class AddressListActivity : BaseActivity() {
-
     private var mSelectAddress: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address_list)
-
-        if (intent.hasExtra(Constants.EXTRA_SELECT_ADDRESS)) {
-            mSelectAddress =
-                intent.getBooleanExtra(Constants.EXTRA_SELECT_ADDRESS, false)
-        }
+        val addressViewModel = ViewModelProvider(this).get(AddAddressViewModel::class.java)
 
         setupActionBar()
 
@@ -34,22 +41,9 @@ class AddressListActivity : BaseActivity() {
             val intent = Intent(this@AddressListActivity, AddEditAddressActivity::class.java)
             startActivityForResult(intent, Constants.ADD_ADDRESS_REQUEST_CODE)
         }
-        //getAddressList()
+        getAddressList()
     }
-    /**
-     * Receive the result from a previous call to
-     * {@link #startActivityForResult(Intent, int)}.  This follows the
-     * related Activity API as described there in
-     * {@link Activity#onActivityResult(int, int, Intent)}.
-     *
-     * @param requestCode The integer request code originally supplied to
-     *                    startActivityForResult(), allowing you to identify who this
-     *                    result came from.
-     * @param resultCode The integer result code returned by the child activity
-     *                   through its setResult().
-     * @param data An Intent, which can return result data to the caller
-     *               (various data can be attached to Intent "extras").
-     */
+
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -80,13 +74,50 @@ class AddressListActivity : BaseActivity() {
 
         toolbar_address_list_activity.setNavigationOnClickListener { onBackPressed() }
     }
-    /**
-     * A function to get the list of address from cloud firestore.
-     */
-    private fun getAddressList() {
 
-        // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
-        hideProgressDialog()
+    private fun getAddressList() {
+        val addressViewModel = ViewModelProvider(this).get(AddAddressViewModel::class.java)
+        val mPrefs = getSharedPreferences("userToken", Context.MODE_PRIVATE)
+        var userId = mPrefs.getString("userId", "").toString()
+        val root = layoutInflater.inflate(R.layout.fragment_dashboard, container, false)
+        addressViewModel.getAddresses(userId).observe(this, { address ->
+            val adapter = this?.let { AddressListAdapter(this, address, true) }
+            val rvAdress = root.findViewById<RecyclerView>(R.id.rv_dashboard_items)
+            rvAdress.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            rvAdress?.adapter = adapter
+            successAddressList(address)
+        })
+    }
+    fun successAddressList(addressList: MutableList<DeliveryAddress>) {
+
+        if (addressList.size > 0) {
+
+            rv_address_list.visibility = View.VISIBLE
+            tv_no_address_found.visibility = View.GONE
+
+            rv_address_list.layoutManager = LinearLayoutManager(this@AddressListActivity)
+            rv_address_list.setHasFixedSize(true)
+
+            val addressAdapter = AddressListAdapter(this@AddressListActivity, addressList, mSelectAddress)
+            rv_address_list.adapter = addressAdapter
+
+            if (!mSelectAddress) {
+                val editSwipeHandler = object : SwipeToEditCallback(this) {
+                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                        val adapter = rv_address_list.adapter as AddressListAdapter
+                        adapter.notifyEditItem(
+                            this@AddressListActivity,
+                            viewHolder.adapterPosition
+                        )
+                    }
+                }
+                val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
+                editItemTouchHelper.attachToRecyclerView(rv_address_list)
+            }
+        } else {
+            rv_address_list.visibility = View.GONE
+            tv_no_address_found.visibility = View.VISIBLE
+        }
     }
 }
