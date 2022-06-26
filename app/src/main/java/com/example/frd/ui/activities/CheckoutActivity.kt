@@ -2,14 +2,14 @@ package com.example.frd.ui.activities
 
 import android.os.Bundle
 import com.example.frd.R
-import com.example.frd.models.Address
 import com.example.frd.models.Cart
+import com.example.frd.models.DeliveryAddress
 import com.example.frd.models.Product
 import kotlinx.android.synthetic.main.activity_checkout.*
 
 class CheckoutActivity : BaseActivity() {
 
-    private var mAddressDetails: Address? = null
+    private var mAddressDetails: DeliveryAddress? = null
     private lateinit var mProductsList: ArrayList<Product>
     private lateinit var mCartItemsList: ArrayList<Cart>
     private var mSubTotal: Double = 0.0
@@ -21,15 +21,9 @@ class CheckoutActivity : BaseActivity() {
         setupActionBar()
         
         if (mAddressDetails != null) {
-            tv_checkout_address_type.text = mAddressDetails?.type
-            tv_checkout_full_name.text = mAddressDetails?.name
-            tv_checkout_address.text = "${mAddressDetails!!.address}, ${mAddressDetails!!.zipCode}"
-            tv_checkout_additional_note.text = mAddressDetails?.additionalNote
-
-            if (mAddressDetails?.otherDetails!!.isNotEmpty()) {
-                tv_checkout_other_details.text = mAddressDetails?.otherDetails
-            }
-            tv_checkout_mobile_number.text = mAddressDetails?.mobileNumber
+            tv_checkout_full_name.text = mAddressDetails?.nameCustomer
+            tv_checkout_address.text = "${mAddressDetails!!.street}, ${mAddressDetails!!.postalCode}"
+            tv_checkout_mobile_number.text = mAddressDetails?.number.toString()
         }
         btn_place_order.setOnClickListener {
             placeAnOrder()

@@ -1,14 +1,17 @@
 package com.example.frd.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import java.util.*
+
+@Parcelize
 data class Order(
-    val user_id: String = "",
-    val items: ArrayList<Cart> = ArrayList(),
-    val address: Address = Address(),
-    val title: String = "",
-    val image: String = "",
-    val sub_total_amount: String = "",
-    val shipping_charge: String = "",
-    val total_amount: String = "",
-    val order_datetime: Long = 0L,
-    var id: String = ""
-)
+    var id: String = "",
+    val orderNumber : Int = 0,
+    val status : String = "0",
+    val orderDate: Date = Date(0),
+    val user: User = User(),
+    val total: Double = 0.0,
+    val cart : Cart = Cart(),
+    val deliveryAddress : DeliveryAddress = DeliveryAddress(),
+) : Parcelable

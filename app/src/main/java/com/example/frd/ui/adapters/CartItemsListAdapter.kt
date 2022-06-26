@@ -1,22 +1,28 @@
 package com.example.frd.ui.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frd.R
-import com.example.frd.models.Cart
-import com.example.frd.ui.ui.fragments.CartListFragment
-import com.example.frd.utils.Constants
+import com.example.frd.models.Product
+import com.example.frd.ui.ui.fragments.CartListActivity
+import com.example.frd.ui.viewmodels.CartListViewModel
 import com.example.frd.utils.GlideLoader
 import kotlinx.android.synthetic.main.item_cart_layout.view.*
 
+
+
+
 open class CartItemsListAdapter (
     private val context: Context,
-    private var list: ArrayList<Cart>,
-    private val updateCartItems: Boolean
+    private var list: ArrayList<Product>,
+    var cartListViewModel: CartListViewModel = CartListViewModel() ,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MyViewHolder(
@@ -28,27 +34,26 @@ open class CartItemsListAdapter (
         )
     }
 
+    @SuppressLint("StringFormatMatches")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val model = list[position]
+        var mLifecycleOwner:LifecycleOwner
+        val product = list[position]
 
         if (holder is MyViewHolder) {
 
-            GlideLoader(context).loadProductPicture(model.image, holder.itemView.iv_cart_item_image)
+            GlideLoader(context).loadProductPicture(product.image1, holder.itemView.iv_cart_item_image)
 
-            holder.itemView.tv_cart_item_title.text = model.title
-            holder.itemView.tv_cart_item_price.text = "$${model.price}"
-            holder.itemView.tv_cart_quantity.text = model.cart_quantity
+            holder.itemView.tv_cart_item_title.text = product.name
+            holder.itemView.tv_cart_item_price.text = "$${product.price}"
+            mLifecycleOwner = context as LifecycleOwner
+            cartListViewModel.currentNumber.observe(mLifecycleOwner, Observer {
+                holder.itemView.tv_cart_quantity.text = it.toString()
+            })
 
-            if (model.cart_quantity == "0") {
+            if (product.stock.toString() == "0") {
                 holder.itemView.ib_remove_cart_item.visibility = View.GONE
                 holder.itemView.ib_add_cart_item.visibility = View.GONE
-
-                if (updateCartItems) {
-                    holder.itemView.ib_delete_cart_item.visibility = View.VISIBLE
-                } else {
-                    holder.itemView.ib_delete_cart_item.visibility = View.GONE
-                }
-
+                holder.itemView.ib_delete_cart_item.visibility = View.VISIBLE
                 holder.itemView.tv_cart_quantity.text =
                     context.resources.getString(R.string.lbl_out_of_stock)
 
@@ -59,21 +64,9 @@ open class CartItemsListAdapter (
                     )
                 )
             } else {
-                if (updateCartItems) {
-                    holder.itemView.ib_remove_cart_item.visibility = View.VISIBLE
-                    holder.itemView.ib_add_cart_item.visibility = View.VISIBLE
-                    holder.itemView.ib_delete_cart_item.visibility = View.VISIBLE
-                } else {
-
-                    holder.itemView.ib_remove_cart_item.visibility = View.GONE
-                    holder.itemView.ib_add_cart_item.visibility = View.GONE
-                    holder.itemView.ib_delete_cart_item.visibility = View.GONE
-                }
-
-
                 holder.itemView.ib_remove_cart_item.visibility = View.VISIBLE
                 holder.itemView.ib_add_cart_item.visibility = View.VISIBLE
-
+                holder.itemView.ib_delete_cart_item.visibility = View.VISIBLE
                 holder.itemView.tv_cart_quantity.setTextColor(
                     ContextCompat.getColor(
                         context,
@@ -82,53 +75,22 @@ open class CartItemsListAdapter (
                 )
             }
             holder.itemView.ib_delete_cart_item.setOnClickListener {
-
                 when (context) {
-                    is CartListFragment -> {
-                        context.showProgressDialog(context.resources.getString(R.string.please_wait))
+                    is CartListActivity -> {
+                        val preferences = context.getSharedPreferences("cart", Context.MODE_PRIVATE)
+                        val prefsEditor = preferences.edit()
+                        prefsEditor.putString("cart", "")
+                        prefsEditor.commit()
+                        // did not have time to implement a way to reload activity ? notifyDataSetChanged not refreshing activity
                     }
                 }
-
             }
 
             holder.itemView.ib_remove_cart_item.setOnClickListener{
-                    val cartQuantity: Int = model.cart_quantity.toInt()
-
-                    val itemHashMap = HashMap<String, Any>()
-
-                    itemHashMap[Constants.CART_QUANTITY] = (cartQuantity - 1).toString()
-
-                    // Show the progress dialog.
-
-                    if (context is CartListFragment) {
-                        context.showProgressDialog(context.resources.getString(R.string.please_wait))
-                    }
+                cartListViewModel.currentNumber.value = --cartListViewModel.numberInCart
             }
             holder.itemView.ib_add_cart_item.setOnClickListener {
-                val cartQuantity: Int = model.cart_quantity.toInt()
-
-                if (cartQuantity < model.stock_quantity.toInt()) {
-
-                    val itemHashMap = HashMap<String, Any>()
-
-                    itemHashMap[Constants.CART_QUANTITY] = (cartQuantity + 1).toString()
-
-                    // Show the progress dialog.
-                    if (context is CartListFragment) {
-                        context.showProgressDialog(context.resources.getString(R.string.please_wait))
-                    }
-
-                } else {
-                    if (context is CartListFragment) {
-                        context.showErrorSnackBar(
-                            context.resources.getString(
-                                R.string.msg_for_available_stock,
-                                model.stock_quantity
-                            ),
-                            true
-                        )
-                    }
-                }
+                cartListViewModel.currentNumber.value = ++cartListViewModel.numberInCart
             }
         }
     }

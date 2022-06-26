@@ -182,17 +182,6 @@
                 android:paddingEnd="@dimen/my_order_details_content_paddingStartEnd"
                 android:paddingBottom="@dimen/my_order_details_content_paddingTopBottom">
 
-                <com.example.frd.utils.MSPTextView
-                    android:id="@+id/tv_my_order_details_address_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/address_details_marginTop"
-                    android:paddingBottom="@dimen/address_details_marginTop"
-                    android:textColor="@color/item_value_text_color"
-                    android:textSize="@dimen/address_details_textSize"
-                    android:textStyle="bold"
-                    tools:text="Home" />
-
                 <com.example.frd.utils.MSPTextViewBold
                     android:id="@+id/tv_my_order_details_full_name"
                     android:layout_width="match_parent"
@@ -203,24 +192,6 @@
 
                 <com.example.frd.utils.MSPTextView
                     android:id="@+id/tv_my_order_details_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/address_details_marginTop"
-                    android:textColor="@color/item_value_text_color"
-                    android:textSize="@dimen/address_details_textSize"
-                    tools:text="XYZ" />
-
-                <com.example.frd.utils.MSPTextView
-                    android:id="@+id/tv_my_order_details_additional_note"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/address_details_marginTop"
-                    android:textColor="@color/item_value_text_color"
-                    android:textSize="@dimen/address_details_textSize"
-                    tools:text="XYZ" />
-
-                <com.example.frd.utils.MSPTextView
-                    android:id="@+id/tv_my_order_details_other_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/address_details_marginTop"
@@ -257,54 +228,6 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:padding="@dimen/my_order_details_items_receipt">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.example.frd.utils.MSPTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/lbl_subtotal"
-                        android:textColor="@color/colorDarkGrey"
-                        android:textSize="@dimen/my_order_details_label_value_textSize" />
-
-                    <com.example.frd.utils.MSPTextView
-                        android:id="@+id/tv_order_details_sub_total"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="@dimen/my_order_details_label_value_textSize"
-                        tools:text="$100"
-                        android:gravity="center_horizontal" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.example.frd.utils.MSPTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/lbl_shipping_charge"
-                        android:textColor="@color/colorDarkGrey"
-                        android:textSize="@dimen/my_order_details_label_value_textSize" />
-
-                    <com.example.frd.utils.MSPTextView
-                        android:id="@+id/tv_order_details_shipping_charge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="@dimen/my_order_details_label_value_textSize"
-                        tools:text="$10.0"
-                        android:gravity="center_horizontal" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

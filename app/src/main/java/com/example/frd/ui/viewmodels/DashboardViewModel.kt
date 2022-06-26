@@ -18,4 +18,14 @@ class DashboardViewModel : ViewModel() {
         }
         return products
     }
+    fun getProductByID(id: String): LiveData<MutableList<Product>> {
+        val product = MutableLiveData<MutableList<Product>>()
+        val mutableList = mutableListOf<Product>()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = ApiClient.apiService.getProductById(id)
+            mutableList.add(response.body()!!)
+            product.postValue(mutableList)
+        }
+        return product
+    }
 }

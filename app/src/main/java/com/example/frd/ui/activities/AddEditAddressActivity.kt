@@ -2,17 +2,14 @@ package com.example.frd.ui.activities
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.View
-import android.widget.Toast
 import com.example.frd.R
-import com.example.frd.models.Address
+import com.example.frd.models.DeliveryAddress
 import com.example.frd.utils.Constants
 import kotlinx.android.synthetic.main.activity_add_edit_address.*
-import kotlinx.android.synthetic.main.activity_address_list.*
 
 class AddEditAddressActivity : BaseActivity() {
 
-    private var mAddressDetails: Address? = null
+    private var mAddressDetails: DeliveryAddress? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,37 +29,15 @@ class AddEditAddressActivity : BaseActivity() {
                 tv_title1.text = resources.getString(R.string.title_edit_address)
                 btn_submit_address.text = resources.getString(R.string.btn_lbl_update)
 
-                et_full_name.setText(mAddressDetails?.name)
-                et_phone_number.setText(mAddressDetails?.mobileNumber)
-                et_address.setText(mAddressDetails?.address)
-                et_zip_code.setText(mAddressDetails?.zipCode)
-                et_additional_note.setText(mAddressDetails?.additionalNote)
+                et_full_name.setText(mAddressDetails?.nameCustomer)
+                et_phone_number.setText(mAddressDetails?.number.toString())
+                et_address.setText(mAddressDetails?.street)
+                et_postal_code.setText(mAddressDetails?.postalCode.toString())
 
-                when (mAddressDetails?.type) {
-                    Constants.HOME -> {
-                        rb_home.isChecked = true
-                    }
-                    Constants.OFFICE -> {
-                        rb_office.isChecked = true
-                    }
-                    else -> {
-                        rb_other.isChecked = true
-                        til_other_details.visibility = View.VISIBLE
-                        et_other_details.setText(mAddressDetails?.otherDetails)
-                    }
-                }
             }
         }
-        rg_type.setOnCheckedChangeListener { _, checkedId ->
-            if (checkedId == R.id.rb_other) {
-                til_other_details.visibility = View.VISIBLE
-            } else {
-                til_other_details.visibility = View.GONE
-            }
-        }
-
         btn_submit_address.setOnClickListener {
-            saveAddressToFirestore()
+            saveAddress()
         }
     }
 
@@ -103,80 +78,32 @@ class AddEditAddressActivity : BaseActivity() {
                 false
             }
 
-            TextUtils.isEmpty(et_zip_code.text.toString().trim { it <= ' ' }) -> {
+            TextUtils.isEmpty(et_postal_code.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_please_enter_zip_code), true)
                 false
             }
 
-            rb_other.isChecked && TextUtils.isEmpty(
-                et_zip_code.text.toString().trim { it <= ' ' }) -> {
-                showErrorSnackBar(resources.getString(R.string.err_msg_please_enter_zip_code), true)
-                false
-            }
             else -> {
                 true
             }
         }
     }
-    private fun saveAddressToFirestore() {
+    private fun saveAddress() {
 
         // Here we get the text from editText and trim the space
         val fullName: String = et_full_name.text.toString().trim { it <= ' ' }
         val phoneNumber: String = et_phone_number.text.toString().trim { it <= ' ' }
         val address: String = et_address.text.toString().trim { it <= ' ' }
-        val zipCode: String = et_zip_code.text.toString().trim { it <= ' ' }
-        val additionalNote: String = et_additional_note.text.toString().trim { it <= ' ' }
-        val otherDetails: String = et_other_details.text.toString().trim { it <= ' ' }
+        val zipCode: String = et_postal_code.text.toString().trim { it <= ' ' }
 
         if (validateData()) {
-
-            // Show the progress dialog.
-            showProgressDialog(resources.getString(R.string.please_wait))
-            hideProgressDialog()
-
-            val addressType: String = when {
-                rb_home.isChecked -> {
-                    Constants.HOME
-                }
-                rb_office.isChecked -> {
-                    Constants.OFFICE
-                }
-                else -> {
-                    Constants.OTHER
-                }
-            }
-
-            val addressModel = Address(
+            val addressModel = DeliveryAddress(
                 fullName,
                 phoneNumber,
                 address,
-                zipCode,
-                additionalNote,
-                addressType,
-                otherDetails
+                zipCode
             )
+            // post this address to the api
         }
-    }
-
-    /**
-     * A function to notify the success result of address saved.
-     */
-    fun addUpdateAddressSuccess() {
-
-        hideProgressDialog()
-
-        val notifySuccessMessage: String = if(mAddressDetails != null && mAddressDetails!!.id.isNotEmpty()){
-            resources.getString(R.string.err_your_address_updated_successfully)
-        } else {
-            resources.getString(R.string.err_your_address_added_successfully)
-        }
-
-        Toast.makeText(
-            this@AddEditAddressActivity,
-            notifySuccessMessage,
-            Toast.LENGTH_SHORT
-        ).show()
-        setResult(RESULT_OK)
-        finish()
     }
 }

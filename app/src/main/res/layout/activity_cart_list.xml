@@ -82,54 +82,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/lbl_subtotal"
-                android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/checkout_label_value_textSize" />
-
-            <com.example.frd.utils.MSPTextView
-                android:id="@+id/tv_sub_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textColor="@color/colorSecondaryText"
-                android:textSize="@dimen/checkout_label_value_textSize"
-                tools:text="$100"
-                android:gravity="center_horizontal" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.example.frd.utils.MSPTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/lbl_shipping_charge"
-                android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/checkout_label_value_textSize" />
-
-            <com.example.frd.utils.MSPTextView
-                android:id="@+id/tv_shipping_charge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textColor="@color/colorSecondaryText"
-                android:textSize="@dimen/checkout_label_value_textSize"
-                tools:text="$10"
-                android:gravity="center_horizontal" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.example.frd.utils.MSPTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/lbl_total_amount"
                 android:textColor="@color/colorDarkGrey"
                 android:textSize="@dimen/checkout_label_value_textSize" />

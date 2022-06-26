@@ -132,7 +132,7 @@
                 app:layout_constraintTop_toBottomOf="@id/til_address">
 
                 <com.example.frd.utils.MSPEditText
-                    android:id="@+id/et_zip_code"
+                    android:id="@+id/et_postal_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -141,106 +141,6 @@
                     android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_additional_note"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/hint_additional_note"
-                android:textColorHint="@color/colorSecondaryText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_zip_code">
-
-                <com.example.frd.utils.MSPEditText
-                    android:id="@+id/et_additional_note"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:padding="@dimen/et_padding"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/et_textSize" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <RadioGroup
-                android:id="@+id/rg_type"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/add_edit_address_radio_button_height"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_additional_note">
-
-                <com.example.frd.utils.MSPRadioButton
-                    android:id="@+id/rb_home"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/add_edit_address_radio_button_height"
-                    android:layout_weight="1"
-                    android:background="@drawable/drawable_gender_tab_selector"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:text="@string/lbl_home"
-                    android:textColor="@drawable/drawable_gender_tab_text_color_selector"
-                    android:textStyle="bold" />
-
-                <com.example.frd.utils.MSPRadioButton
-                    android:id="@+id/rb_office"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/add_edit_address_radio_button_height"
-                    android:layout_marginStart="@dimen/add_edit_address_radio_button_marginStartEnd"
-                    android:layout_marginEnd="@dimen/add_edit_address_radio_button_marginStartEnd"
-                    android:layout_weight="1"
-                    android:background="@drawable/drawable_gender_tab_selector"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="@string/lbl_office"
-                    android:textColor="@drawable/drawable_gender_tab_text_color_selector"
-                    android:textStyle="bold" />
-
-                <com.example.frd.utils.MSPRadioButton
-                    android:id="@+id/rb_other"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/add_edit_address_radio_button_height"
-                    android:layout_weight="1"
-                    android:background="@drawable/drawable_gender_tab_selector"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="@string/lbl_other"
-                    android:textColor="@drawable/drawable_gender_tab_text_color_selector"
-                    android:textStyle="bold" />
-            </RadioGroup>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_other_details"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/hint_other_details"
-                android:textColorHint="@color/colorSecondaryText"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rg_type">
-
-                <com.example.frd.utils.MSPEditText
-                    android:id="@+id/et_other_details"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:padding="@dimen/et_padding"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/et_textSize" />
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.example.frd.utils.MSPButtons
                 android:id="@+id/btn_submit_address"
@@ -260,7 +160,7 @@
                 android:textSize="@dimen/btn_textSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_other_details" />
+                app:layout_constraintTop_toBottomOf="@id/til_zip_code" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

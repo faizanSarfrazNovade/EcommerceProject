@@ -11,15 +11,9 @@
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
-    <fragment
-        android:id="@+id/navigation_products"
-        android:name="com.example.frd.ui.ui.fragments.ProductsFragment"
-        android:label="@string/title_products"
-        tools:layout="@layout/fragment_products" />
-
     <activity
         android:id="@+id/navigation_cart"
-        android:name="com.example.frd.ui.ui.fragments.CartListFragment"
+        android:name="com.example.frd.ui.ui.fragments.CartListActivity"
         android:label="@string/title_cart"
         tools:layout="@layout/activity_cart_list" />
 

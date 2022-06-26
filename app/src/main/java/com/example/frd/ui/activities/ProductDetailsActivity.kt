@@ -1,5 +1,6 @@
 package com.example.frd.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -7,11 +8,15 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.frd.R
 import com.example.frd.models.Product
-import com.example.frd.ui.ui.fragments.CartListFragment
+import com.example.frd.ui.ui.fragments.CartListActivity
 import com.example.frd.ui.viewmodels.ProductViewModel
 import com.example.frd.utils.Constants
 import com.example.frd.utils.GlideLoader
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_product_details.*
+
+
+
 
 class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
 
@@ -63,8 +68,6 @@ class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
     fun productDetailsSuccess(product: Product) {
 
         mProductDetails = product
-        // Hide Progress dialog.
-        //hideProgressDialog()
 
         // Populate the product details in the UI.
         if (product.image1 != null){
@@ -102,8 +105,12 @@ class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
      * A function to prepare the cart item to add it to the cart.
      */
     private fun addToCart() {
-        showProgressDialog(resources.getString(R.string.please_wait))
-        hideProgressDialog()
+        val mPrefs = getSharedPreferences("cart", Context.MODE_PRIVATE)
+        val prefsEditor = mPrefs.edit()
+        val gson = Gson()
+        val json = gson.toJson(mProductDetails)
+        prefsEditor.putString("cart", json)
+        prefsEditor.commit()
     }
 
     override fun onClick(v: View?) {
@@ -115,7 +122,7 @@ class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
                 }
 
                 R.id.btn_go_to_cart->{
-                    startActivity(Intent(this@ProductDetailsActivity, CartListFragment::class.java))
+                    startActivity(Intent(this@ProductDetailsActivity, CartListActivity::class.java))
                 }
             }
         }

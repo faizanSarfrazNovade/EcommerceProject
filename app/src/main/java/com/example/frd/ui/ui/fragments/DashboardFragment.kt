@@ -30,9 +30,6 @@ class DashboardFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        /*dashboardViewModel =
-            ViewModelProviders.of(this).get(DashboardViewModel::class.java)*/
-
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
         dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         dashboardViewModel.getProducts().observe(viewLifecycleOwner, { products ->

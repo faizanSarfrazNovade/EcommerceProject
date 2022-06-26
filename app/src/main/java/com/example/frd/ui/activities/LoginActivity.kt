@@ -1,5 +1,6 @@
 package com.example.frd.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -101,10 +102,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener{
             val password = t_password.text.toString().trim(){it<=' '}
             val signIn = UserSignin(email, password)
             val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+
             CoroutineScope(Dispatchers.IO).launch {
                 val res = ApiClient.apiService.signIn(signIn)
-
                 if (res.code() == HTTP_OK){
+                    var userToken = res.body()!!
+                    val preferences = getSharedPreferences("userToken", Context.MODE_PRIVATE)
+                    val prefsEditor = preferences.edit()
+                    prefsEditor.putString("userToken", userToken.accessToken)
+                    prefsEditor.commit()
                     startActivity(intent)
                 }else {
                     showErrorSnackBar(resources.getString(R.string.err_msg_email_password_mismatch), true)

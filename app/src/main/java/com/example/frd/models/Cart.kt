@@ -1,12 +1,16 @@
 package com.example.frd.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Cart(
-    val user_id: String = "",
-    val product_id: String = "",
-    val title: String = "",
-    val price: String = "",
-    val image: String = "",
-    var cart_quantity: String = "",
-    var stock_quantity: String = "",
-    var id: String = "",
-)
+    val id: String = "",
+    val product: ArrayList<Product> = ArrayList() ,
+    val userSession: String = "",
+    val validation: Boolean = false,
+    val productId: String = "",
+    val paymentMethod: String = "",
+    val quantity: Int = 0,
+    val total: Long = 0,
+) : Parcelable
