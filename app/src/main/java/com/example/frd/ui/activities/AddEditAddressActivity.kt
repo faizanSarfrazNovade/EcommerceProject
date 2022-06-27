@@ -14,23 +14,16 @@ import kotlinx.coroutines.launch
 class AddEditAddressActivity : BaseActivity() {
 
     private var mAddressDetails: DeliveryAddress? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit_address)
-
         setupActionBar()
-
-
-
         if (mAddressDetails != null) {
 
                 tv_title1.text = resources.getString(R.string.title_edit_address)
                 btn_submit_address.text = resources.getString(R.string.btn_lbl_update)
-
                 et_street.setText(mAddressDetails?.street)
                 et_postal_code.setText(mAddressDetails?.zipCode.toString())
-
         }
         btn_submit_address.setOnClickListener {
             saveAddress()
@@ -40,29 +33,24 @@ class AddEditAddressActivity : BaseActivity() {
     private fun setupActionBar() {
 
         setSupportActionBar(toolbar_add_edit_address_activity)
-
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
         }
-
         toolbar_add_edit_address_activity.setNavigationOnClickListener { onBackPressed() }
     }
 
     private fun validateData(): Boolean {
         return when {
-
             TextUtils.isEmpty(et_street.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_please_enter_address), true)
                 false
             }
-
             TextUtils.isEmpty(et_postal_code.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_please_enter_zip_code), true)
                 false
             }
-
             else -> {
                 true
             }
@@ -70,7 +58,6 @@ class AddEditAddressActivity : BaseActivity() {
     }
 
     private fun saveAddress() {
-
         val country: String = et_country.text.toString().trim { it <= ' ' }
         val city: String = et_city.text.toString().trim { it <= ' ' }
         val street: String = et_street.text.toString().trim { it <= ' ' }

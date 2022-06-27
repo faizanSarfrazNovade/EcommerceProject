@@ -27,8 +27,6 @@ class RegisterActivity : BaseActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         tv_login.setOnClickListener(){
-
-            // Launch the register screen when the user clicks on the text.
             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
             startActivity(intent)
         }
@@ -61,27 +59,22 @@ class RegisterActivity : BaseActivity() {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_first_name), true)
                 false
             }
-
             TextUtils.isEmpty(et_last_name.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_last_name), true)
                 false
             }
-
             isValidEmail(et_email.text.toString().trim()) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
                 false
             }
-
             TextUtils.isEmpty(et_password.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_password), true)
                 false
             }
-
             TextUtils.isEmpty(et_confirm_password.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_confirm_password), true)
                 false
             }
-
             et_password.text.toString().trim { it <= ' ' } != et_confirm_password.text.toString()
                 .trim { it <= ' ' } -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_password_and_confirm_password_mismatch), true)

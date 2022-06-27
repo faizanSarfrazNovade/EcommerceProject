@@ -9,7 +9,6 @@ import com.example.frd.models.Order
 import com.example.frd.ui.adapters.CartItemsListAdapter
 import com.example.frd.utils.Constants
 import kotlinx.android.synthetic.main.activity_my_order_details.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 class MyOrderDetailsActivity : AppCompatActivity() {
@@ -44,13 +43,6 @@ class MyOrderDetailsActivity : AppCompatActivity() {
     private fun setupUI(orderDetails: Order) {
 
         tv_order_details_id.text = orderDetails.id
-
-
-        // Date Format in which the date will be displayed in the UI.
-        val dateFormat = "dd MMM yyyy HH:mm"
-        // Create a DateFormatter object for displaying date in specified format.
-        val formatter = SimpleDateFormat(dateFormat, Locale.getDefault())
-
         tv_order_details_date.text = orderDetails.orderDate.toString()
 
         rv_my_order_items_list.layoutManager = LinearLayoutManager(this@MyOrderDetailsActivity)

@@ -30,9 +30,7 @@ class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
         setContentView(R.layout.activity_product_details)
 
         if (intent.hasExtra(Constants.EXTRA_PRODUCT_ID)) {
-            mProductId =
-                intent.getStringExtra(Constants.EXTRA_PRODUCT_ID)!!
-            //Log.i("Product Id", mProductId)
+            mProductId = intent.getStringExtra(Constants.EXTRA_PRODUCT_ID)!!
         }
         setupActionBar()
         btn_go_to_cart.visibility = View.VISIBLE
@@ -83,7 +81,6 @@ class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
         tv_product_details_description.text = product.description
         tv_product_details_stock_quantity.text = if (product.stock != null) product.stock.toString() else "0"
 
-        // There is no need to check the cart list if the product owner himself is seeing the product details.
         if(product.stock == 0){
 
             // Hide the AddToCart button if the item is already in the cart.
@@ -116,7 +113,6 @@ class ProductDetailsActivity : BaseActivity(),View.OnClickListener {
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
-
                 R.id.btn_add_to_cart -> {
                     addToCart()
                 }

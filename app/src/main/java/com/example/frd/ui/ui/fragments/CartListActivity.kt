@@ -103,19 +103,15 @@ class CartListActivity : BaseActivity() {
             rv_cart_items_list.visibility = View.VISIBLE
             ll_checkout.visibility = View.VISIBLE
             tv_no_cart_item_found.visibility = View.GONE
-
             rv_cart_items_list.layoutManager = LinearLayoutManager(this@CartListActivity)
             rv_cart_items_list.setHasFixedSize(true)
-
             val cartListAdapter = CartItemsListAdapter(this@CartListActivity, productsList)
             rv_cart_items_list.adapter = cartListAdapter
 
             var total = 0.0
 
             for (item in productsList) {
-
                 val availableQuantity = item.stock
-
                 if (availableQuantity > 0) {
                     total = item.price
                 }

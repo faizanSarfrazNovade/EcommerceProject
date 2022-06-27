@@ -11,9 +11,6 @@ import com.example.frd.models.Product
 import com.example.frd.utils.GlideLoader
 import kotlinx.android.synthetic.main.item_dashboard_layout.view.*
 
-/**
- * A adapter class for dashboard items list.
- */
 open class DashboardItemsListAdapter(
     private val context: Context,
     private var list: MutableList<Product>

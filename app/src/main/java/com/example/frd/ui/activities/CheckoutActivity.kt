@@ -27,7 +27,6 @@ class CheckoutActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout)
         setupActionBar()
-        
         if (mAddressDetails != null) {
             tv_checkout_address.text = "${mAddressDetails!!.street}, ${mAddressDetails!!.zipCode}"
         }
@@ -43,7 +42,6 @@ class CheckoutActivity : BaseActivity() {
     }
 
     private fun setupActionBar() {
-
         setSupportActionBar(toolbar_checkout_activity)
 
         val actionBar = supportActionBar
@@ -60,7 +58,7 @@ class CheckoutActivity : BaseActivity() {
         val mPrefs = getSharedPreferences("userToken", Context.MODE_PRIVATE)
         var userToken = mPrefs.getString("userToken", "").toString()
         CoroutineScope(Dispatchers.IO).launch {
-            val res = ApiClient.apiService.submitOrder(userToken)
+            ApiClient.apiService.submitOrder(userToken)
         }
     }
 

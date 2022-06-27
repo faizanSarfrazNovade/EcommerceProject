@@ -5,13 +5,14 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
-    // products
 
+    // products
     @GET("/products")
     suspend fun getProducts(): Response<MutableList<Product>?>
 
     @GET("/products/{id}")
     suspend fun getProductById(@Path("id") id: String): Response<Product?>
+
 
     // users
     @Headers("Accept: application/json")
@@ -22,6 +23,7 @@ interface ApiService {
     @POST("api/auth/sign-in")
     suspend fun signIn(@Body customer: UserSignin): Response<UserToken>
 
+
     // cart
     @Headers("Accept: application/json")
     @POST("carts/save")
@@ -30,6 +32,7 @@ interface ApiService {
     @GET("/carts/{id}")
     suspend fun getCart(@Path("id") id: String): Response<Cart2?>
 
+
     //delivery
     @Headers("Accept: application/json")
     @POST("delivery/save")
@@ -37,6 +40,7 @@ interface ApiService {
 
     @GET("/delivery/{id}")
     suspend fun getAddress(@Path("id") id:String) : Response<MutableList<DeliveryAddress>?>
+
 
     //orders
     @Headers("Accept: application/json")

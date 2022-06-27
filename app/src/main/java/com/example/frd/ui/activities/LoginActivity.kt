@@ -33,16 +33,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener{
             )
         }
         tv_register.setOnClickListener(){
-
             // Launch the register screen when the user clicks on the text.
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(intent)
         }
-        // Click event assigned to Forgot Password text.
         tv_forgot_password.setOnClickListener(this)
-        // Click event assigned to Login button.
         btn_login.setOnClickListener(this)
-        // Click event assigned to Register text.
         tv_register.setOnClickListener(this)
     }
     override fun onClick(v: View?) {
@@ -50,11 +46,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener{
             when (v.id) {
 
                 R.id.tv_forgot_password -> {}
-
                 R.id.btn_login -> {
                     logInRegisteredUser()
                 }
-
                 R.id.tv_register -> {
                     val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                     startActivity(intent)
@@ -82,6 +76,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener{
             }
         }
     }
+
     fun isValidEmail(target: CharSequence?): Boolean {
         return if (TextUtils.isEmpty(target)) {
             false
@@ -89,6 +84,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener{
             !Patterns.EMAIL_ADDRESS.matcher(target).matches()
         }
     }
+
     private fun logInRegisteredUser(){
         if(validateLoginDetails()){
             val email = t_email.text.toString().trim(){it<=' '}

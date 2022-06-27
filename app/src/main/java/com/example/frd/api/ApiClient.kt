@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit
 
 object ApiClient {
     private const val BASE_URL: String = "https://back-dany.herokuapp.com"
-
     private val gson: Gson by lazy {
         GsonBuilder().setLenient().create()
     }

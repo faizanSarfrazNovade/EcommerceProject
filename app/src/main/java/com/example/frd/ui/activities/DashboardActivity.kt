@@ -25,8 +25,6 @@ class DashboardActivity : BaseActivity() {
                 R.drawable.app_gradient_color_background
             )
         )
-        // END
-
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
