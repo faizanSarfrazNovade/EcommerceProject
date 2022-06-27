@@ -15,7 +15,6 @@ object Constants {
     const val PICK_IMAGE_REQUEST_CODE = 2
     const val EXTRA_PRODUCT_ID: String = "extra_product_id"
     const val EXTRA_ADDRESS_DETAILS: String = "AddressDetails"
-    const val CART_QUANTITY: String = "cart_quantity"
     const val EXTRA_SELECT_ADDRESS: String = "extra_select_address"
     const val ADD_ADDRESS_REQUEST_CODE: Int = 121
     const val EXTRA_MY_ORDER_DETAILS: String = "extra_MY_ORDER_DETAILS"
@@ -25,12 +24,10 @@ object Constants {
      * A function for user profile image selection from phone storage.
      */
     fun showImageChooser(activity: Activity) {
-        // An intent for launching the image selection of phone storage.
         val galleryIntent = Intent(
             Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
-        // Launches the image selection of phone storage using the constant code.
         activity.startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
     }
 
